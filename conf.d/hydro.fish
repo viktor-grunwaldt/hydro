@@ -37,7 +37,7 @@ function _hydro_postexec --on-event fish_postexec
 
     for code in $last_status
         if test $code -ne 0
-            set --global _hydro_status "$fish_color_error| "(echo $last_status)" $_hydro_color_prompt$fish_color_error❱"
+            set --global _hydro_status "$_hydro_color_error| "(echo $last_status)" $_hydro_color_prompt$_hydro_color_error❱"
             break
         end
     end
@@ -115,8 +115,10 @@ end
 
 set --global hydro_color_normal (set_color normal)
 
-for color in hydro_color_{pwd,git,prompt,duration,start}
+for color in hydro_color_{pwd,git,error,prompt,duration,start}
     function $color --on-variable $color --inherit-variable color
         set --query $color && set --global _$color (set_color $$color)
     end && $color
 end
+
+set --global hydro_color_error $fish_color_error
