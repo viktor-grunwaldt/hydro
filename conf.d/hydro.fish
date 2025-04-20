@@ -102,6 +102,14 @@ function _hydro_prompt --on-event fish_prompt
     set --global _hydro_last_pid $last_pid
 end
 
+function _hydro_update_nix_indicator
+    if set -q IN_NIX_SHELL && test -n "$IN_NIX_SHELL"
+        set --global _hydro_nix_indicator "❄️ "
+    else
+        set --global _hydro_nix_indicator ""
+    end
+end
+
 function _hydro_fish_exit --on-event fish_exit
     set --erase $_hydro_git
 end
@@ -122,3 +130,4 @@ for color in hydro_color_{pwd,git,error,prompt,duration,start}
 end
 
 set --global hydro_color_error $fish_color_error
+_hydro_update_nix_indicator
